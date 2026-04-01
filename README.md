@@ -47,7 +47,7 @@ voltedge-react/
 ├── dist/                    # Production build output
 ├── package.json             # Dependencies and scripts
 ├── vite.config.js           # Vite configuration
-└── eslint.config.js         # ESLint configuration
+├── eslint.config.js         # ESLint configuration
 ```
 
 ## Installation & Setup
