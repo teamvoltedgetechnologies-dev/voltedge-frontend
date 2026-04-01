@@ -26,7 +26,10 @@ const Contact = () => {
                 setIsOtpStep(true);
             } else {
                 const data = await res.json();
-                throw new Error(data.error || 'Failed to request OTP.');
+                let errMsg = data.error || 'Failed to request OTP.';
+                if (data.details) errMsg += ` (${data.details})`;
+                if (data.suggestion) errMsg += ` - ${data.suggestion}`;
+                throw new Error(errMsg);
             }
         } catch (err) {
             console.error(err);
