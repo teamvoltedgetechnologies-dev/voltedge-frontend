@@ -25,11 +25,12 @@ const Contact = () => {
                 setStatus('Verification code sent! Please check your inbox.');
                 setIsOtpStep(true);
             } else {
-                throw new Error('Failed to request OTP.');
+                const data = await res.json();
+                throw new Error(data.error || 'Failed to request OTP.');
             }
         } catch (err) {
             console.error(err);
-            setStatus('Error connecting to backend database. Please try again or call us directly.');
+            setStatus(`Error: ${err.message}`);
         }
     };
 
@@ -44,13 +45,15 @@ const Contact = () => {
                 body: JSON.stringify({ email: formData.email, otp })
             });
             
+            const data = await res.json();
+            
             if (res.ok) {
                 setStatus('Message sent successfully!');
                 setFormData({ name: '', email: '', subject: 'Sales Inquiry', message: '' });
                 setOtp('');
                 setIsOtpStep(false);
             } else {
-                setStatus('Error: Invalid or expired OTP code. Please try again.');
+                setStatus(`Error: ${data.error || 'Invalid or expired OTP code. Please try again.'}`);
             }
         } catch (err) {
             console.error(err);
